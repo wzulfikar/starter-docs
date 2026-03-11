@@ -13,7 +13,7 @@ Add these packages (use `bun add <packages>`):
 - type-fest for type utils
 - tsgo
 - lucide-react-native for icons
-- ddate-fns for date formatting
+- date-fns for date formatting
 - @tanstack/react-query for data state
 - @reactuses/core for hook utilities
 - @gorhom/bottom-sheet for bottom sheet
