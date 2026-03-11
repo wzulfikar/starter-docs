@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(chmod +x /Users/wzulfikar/code/github/starter-docs/sync.sh)",
-      "Bash(./sync.sh)"
+      "Bash(./sync.sh)",
+      "Read(//private/tmp/**)",
+      "Bash(/Users/wzulfikar/code/github/starter-docs/sync.sh expo .)",
+      "Bash(mkdir -p /tmp/test-sync)",
+      "Read(//tmp/**)",
+      "Bash(mkdir -p /tmp/test-omit)",
+      "Bash(/Users/wzulfikar/code/github/starter-docs/sync.sh expo)"
     ]
   }
 }

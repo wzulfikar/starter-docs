@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**/*.ts", "**/*.tsx", "!next-env.d.ts", "!public/mockServiceWorker.js"]
+    "includes": ["**/*.ts", "**/*.tsx"]
   },
   "css": {
     "parser": {
