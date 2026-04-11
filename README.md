@@ -6,13 +6,47 @@ A curated inventory of code patterns, tooling choices, and architectural decisio
 
 This is a **subtractive** approach to project setup: everything you've ever used is in this repo. When you start a new project, the agent reads this inventory, interviews you about what you need, and removes what doesn't apply. You end up with exactly what fits — nothing more.
 
-## How to use
+## Setup (one time)
 
-1. Start a new project (clone a framework starter, `git init`, whatever)
-2. Tell your agent: *"Check my meta-starter at `~/meta-starter` and set up this project"*
-3. The agent reads `AGENTS.md`, introduces itself, and interviews you
-4. Based on your answers it picks the right template and drops optional features you don't need
-5. You get a working, opinionated project ready to build on
+Clone to a fixed location on your machine:
+
+```bash
+git clone https://github.com/wzulfikar/starter-docs ~/meta-starter
+```
+
+## Using with Claude Code
+
+Symlink the slash command so it's available globally:
+
+```bash
+ln -s ~/meta-starter/.claude/commands/meta-starter.md ~/.claude/commands/meta-starter.md
+```
+
+Then in any new project folder, open Claude Code and run:
+
+```
+/meta-starter
+```
+
+Claude reads the command, opens `~/meta-starter/AGENTS.md`, introduces itself as meta-starter, and interviews you.
+
+## Using with Codex
+
+Codex doesn't have slash commands, but you can add a shell function to your `~/.zshrc` or `~/.bashrc`:
+
+```bash
+meta-starter() {
+  codex "$(cat ~/meta-starter/AGENTS.md)"
+}
+```
+
+Then in any new project folder:
+
+```bash
+meta-starter
+```
+
+Codex receives the full AGENTS.md as its instruction and starts the interview.
 
 ## Templates
 
@@ -32,9 +66,12 @@ These apply across all templates:
 - **Lefthook** for git hooks (replaces husky)
 - **Tailwind** + **ShadCN** for styling (web/desktop), **mgcrea/react-native-tailwind** for mobile
 - **ky** for HTTP requests
+- **@tanstack/react-query** for async data fetching and server state
+- **@legendapp/state** for global/shared state management
 - **Zod** for schema validation
 - **type-fest** for type utilities
-- **Lucide** for icons
+- **Lucide** for icons, **react-simple-icons** for brand logos
+- **motion** for animations
 
 ## Optional features (decided per project)
 

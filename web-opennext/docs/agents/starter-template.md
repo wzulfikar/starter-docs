@@ -35,6 +35,8 @@ Use bun (`bun i <package_name>`) and install these packages:
 - motion
 - @icons-pack/react-simple-icons
 - lucide-animated
+- @tanstack/react-query
+- @legendapp/state
 
 ## Update package.json
 
@@ -57,6 +59,11 @@ Add these scripts:
 - `lucide-animated` — animated variants of lucide icons (https://lucide-animated.com)
 - `@icons-pack/react-simple-icons` — brand SVG icons (GitHub, Twitter, Stripe, etc.)
 - `motion` — animation library (https://motion.dev); replaces framer-motion
+
+## Data fetching and state
+
+- `@tanstack/react-query` — async data fetching, caching, and server state
+- `@legendapp/state` — global/shared state management; fine-grained reactivity
 
 ## Toast and drawers
 
