@@ -230,6 +230,78 @@ await autumn.track({
 AUTUMN_SECRET_KEY=<secret-key>
 ```
 
+## Sanity
+
+Headless CMS for structured content. The `sanity-studio` folder lives in your repo so schema changes are version-controlled and reviewable like any other code. Once the studio is deployed, editors can manage content from the Sanity dashboard without touching the codebase.
+
+**What it covers:**
+- **Structured content** — define schemas in code; content is stored and served via Sanity's CDN (GROQ queries or GraphQL)
+- **Local studio** — run the Sanity Studio locally to iterate on schemas and preview content before publishing
+- **Hosted studio** — deploy the studio to `your-project.sanity.studio` so non-technical editors can manage content directly from the Sanity dashboard
+
+**Workflow:**
+- Schema lives in `sanity-studio/` and is tracked in Git — schema changes go through normal code review
+- Run `npm run dev` inside `sanity-studio/` to develop schemas locally
+- Deploy schema + studio with `npx sanity deploy` when changes are ready
+- Editors then use the hosted dashboard; no local setup required for content editing
+
+**Env vars needed:**
+```
+SANITY_PROJECT_ID=<project-id>
+SANITY_DATASET=production
+SANITY_API_TOKEN=<api-token>  # server-side reads of draft content; public reads don't need this
+```
+
+**Fetching content:**
+```ts
+// src/lib/sanity.ts
+import { createClient } from "@sanity/client"
+
+export const sanity = createClient({
+  projectId: process.env.SANITY_PROJECT_ID!,
+  dataset: process.env.SANITY_DATASET ?? "production",
+  apiVersion: "2024-01-01",
+  useCdn: true,  // set to false when you need fresh data server-side
+})
+```
+
+```ts
+// Example GROQ query
+const posts = await sanity.fetch(`*[_type == "post"] | order(publishedAt desc) {
+  _id,
+  title,
+  slug,
+  publishedAt,
+}`)
+```
+
+**Free tier highlights:** Generous free plan — 3 users, 2 datasets, 500k API requests/month, 10 GB bandwidth.
+
+## local-tunnel
+
+Exposes a local HTTP server to the public internet over a secure tunnel — useful for testing webhooks, sharing a dev build, or connecting local services to third-party APIs that require a real URL.
+
+```bash
+npx localtunnel --port 3000
+# → https://your-random-subdomain.loca.lt
+```
+
+Request a stable subdomain so the URL doesn't change between sessions:
+
+```bash
+npx localtunnel --port 3000 --subdomain my-app-dev
+# → https://my-app-dev.loca.lt
+```
+
+**Alternatively:** [ngrok](https://ngrok.com) is a popular alternative with a dashboard, request inspector, and persistent subdomains on paid plans.
+
+```bash
+ngrok http 3000
+# → https://abc123.ngrok-free.app
+```
+
+Both tools serve the same purpose — pick whichever fits your workflow. `localtunnel` requires no account; `ngrok` requires a free account but offers more features (request replay, TLS termination config, etc.).
+
 ---
 
 ## Summary
@@ -241,3 +313,5 @@ AUTUMN_SECRET_KEY=<secret-key>
 | Plunk | Transactional + campaign email | 3,000 emails/month |
 | Trigger.dev | Background jobs, user schedules | Free for dev; generous production tier |
 | Autumn | Billing, usage tracking | Free (Stripe fees only when charging) |
+| Sanity | Headless CMS, structured content | 3 users, 500k API req/month, 10 GB bandwidth |
+| local-tunnel / ngrok | Expose local server to the internet | local-tunnel: free, no account; ngrok: free tier available |
