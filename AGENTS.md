@@ -79,6 +79,7 @@ The `patterns/` folder contains cross-platform patterns you should apply when se
 | Pattern | Applies to |
 |---------|------------|
 | `patterns/lefthook-for-automated-maintenance.md` | All platforms — biome on staged files pre-commit, tsgo pre-push |
+| `patterns/icons.md` | All platforms — lucide (default), lucide-animated, simple icons for brands |
 
 ---
 
