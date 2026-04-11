@@ -85,6 +85,7 @@ The `patterns/` folder contains cross-platform patterns you should apply when se
 | `patterns/agent-tools.md` | All platforms — essential MCP tools for browser, simulator, and GitHub |
 | `patterns/product-demo.md` | Mobile — RocketSim, TinyShot, Butterkit for recordings, mockups, and App Store screenshots |
 | `patterns/expo-rapid-iteration.md` | Mobile — internal distribution via TestFlight/Play Store + OTA updates with EAS |
+| `patterns/thin-api-wrapper-with-ky.md` | All platforms — thin ky wrapper for services without an SDK |
 
 ---
 
