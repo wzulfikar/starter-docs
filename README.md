@@ -69,6 +69,7 @@ These apply across all templates:
 - **@tanstack/react-query** for async data fetching and server state
 - **@legendapp/state** for global/shared state management
 - **Zod** for schema validation
+- **es-toolkit** for utility functions (replaces lodash)
 - **type-fest** for type utilities
 - **Lucide** for icons, **react-simple-icons** for brand logos
 - **motion** for animations
