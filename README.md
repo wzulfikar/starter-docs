@@ -1,31 +1,43 @@
-# Starter Docs
+# Meta Starter
 
-Collection of scripts, configs, documentations,and LLM prompts to add to your favorite starter/template repositories.
+A curated inventory of code patterns, tooling choices, and architectural decisions accumulated from real projects. When starting a new project, point your AI agent here — it will interview you and decide what to include.
 
-## Why
+## The idea
 
-You have your favorite starter template but there are things that you don't quite like it and so you want to change. With AI agents, it's easy now but you still want some structure. This repo helps with that.
+This is a **subtractive** approach to project setup: everything you've ever used is in this repo. When you start a new project, the agent reads this inventory, interviews you about what you need, and removes what doesn't apply. You end up with exactly what fits — nothing more.
 
-## How it works
+## How to use
 
-I have starter templates that I like. For example, [supa-next-starter](https://github.com/michaeltroya/supa-next-starter) is my default when I want to start a web app project. However, I want to use specific things, like `biome` instead of `eslint`, `tsgo` instead of `tsc`. Instead of tweaking the template manually, I can:
+1. Start a new project (clone a framework starter, `git init`, whatever)
+2. Tell your agent: *"Check my meta-starter at `~/meta-starter` and set up this project"*
+3. The agent reads `AGENTS.md`, introduces itself, and interviews you
+4. Based on your answers it picks the right template and drops optional features you don't need
+5. You get a working, opinionated project ready to build on
 
-1. Clone the template like usual, e.g. into `my-app`
-2. Copy everything in template's folder to the app folder, e.g. from `starter-docs/supa-next-starter/*` to `my-app/`
-3. Use AI agent to start the tweak by including `docs/agents/customize-starter-template.md`. The markdown file contains prompt to modify the template to my liking.
+## Templates
 
-With this approach, I can keep my preference and replicate it when starting new projects, without having to keep up with the changes in upstream (because AI agent will handle it on demand).
+| Template | Platform | Framework |
+|----------|----------|-----------|
+| `web-opennext/` | Web | Next.js + OpenNext (Cloudflare) |
+| `mobile-expo/` | iOS / Android | Expo + React Native |
+| `desktop-wails/` | Desktop | Go + Wails |
 
-Hope it helps :)
+## Common stack
 
-## Common Tech Stack
+These apply across all templates:
 
-Tech stack I use in different platforms.
+- **TypeScript** + **tsgo** (`@typescript/native-preview`) for type checking
+- **Bun** for runtime, package manager, and test runner
+- **Biome** for linting and formatting (replaces eslint + prettier)
+- **Lefthook** for git hooks (replaces husky)
+- **Tailwind** + **ShadCN** for styling (web/desktop), **mgcrea/react-native-tailwind** for mobile
+- **ky** for HTTP requests
+- **Zod** for schema validation
+- **type-fest** for type utilities
+- **Lucide** for icons
 
-- Typescript and tsgo: I use Typescript in all platform and will use `tsgo` where possible. It's still in preview but I find it works well so far in all my codebase.
-- Tailwind (and ShadCN) for styling: Tailwind works with web platform for web and desktop (Wails is just webview). In Expo, I use compile-time Tailwind library like [mgcrea/react-native-tailwind](https://github.com/mgcrea/react-native-tailwind)
-- Biome: faster than eslint/prettier
-- Bun for runtime, package manager, and test: Always use bun when possible. When not possible (eg. for test in react-native), use the recommended tool like jest but still wrap it nicely in package.json, eg. having `bun test:all` which run split test for bun test and jest.
-- `ky` for fetch and api wrapper: good api interface, good types
-- `type-fest`
-- `saas-maker`: error handling, route utils
+## Optional features (decided per project)
+
+- **Supabase** — auth and database
+- **Autumn** — billing and payments
+- **Rate limiting** — for public-facing APIs
