@@ -21,6 +21,9 @@ Add these packages (use `bun add <packages>`):
 - react-native-enriched-markdown for markdown
 - zod
 - expo-crypto or react-native-get-random-values
+- react-native-sonner for toast notifications (https://github.com/idrissgarfa/react-native-sonner)
+- @icons-pack/react-simple-icons for brand SVG icons
+- @legendapp/state for global/shared state management
 
 
 ## Tips

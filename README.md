@@ -1,31 +1,81 @@
-# Starter Docs
+# Meta Starter
 
-Collection of scripts, configs, documentations,and LLM prompts to add to your favorite starter/template repositories.
+A curated inventory of code patterns, tooling choices, and architectural decisions accumulated from real projects. When starting a new project, point your AI agent here — it will interview you and decide what to include.
 
-## Why
+## The idea
 
-You have your favorite starter template but there are things that you don't quite like it and so you want to change. With AI agents, it's easy now but you still want some structure. This repo helps with that.
+This is a **subtractive** approach to project setup: everything you've ever used is in this repo. When you start a new project, the agent reads this inventory, interviews you about what you need, and removes what doesn't apply. You end up with exactly what fits — nothing more.
 
-## How it works
+## Setup (one time)
 
-I have starter templates that I like. For example, [supa-next-starter](https://github.com/michaeltroya/supa-next-starter) is my default when I want to start a web app project. However, I want to use specific things, like `biome` instead of `eslint`, `tsgo` instead of `tsc`. Instead of tweaking the template manually, I can:
+Clone to a fixed location on your machine:
 
-1. Clone the template like usual, e.g. into `my-app`
-2. Copy everything in template's folder to the app folder, e.g. from `starter-docs/supa-next-starter/*` to `my-app/`
-3. Use AI agent to start the tweak by including `docs/agents/customize-starter-template.md`. The markdown file contains prompt to modify the template to my liking.
+```bash
+git clone https://github.com/wzulfikar/starter-docs ~/meta-starter
+```
 
-With this approach, I can keep my preference and replicate it when starting new projects, without having to keep up with the changes in upstream (because AI agent will handle it on demand).
+## Using with Claude Code
 
-Hope it helps :)
+Symlink the slash command so it's available globally:
 
-## Common Tech Stack
+```bash
+ln -s ~/meta-starter/.claude/commands/meta-starter.md ~/.claude/commands/meta-starter.md
+```
 
-Tech stack I use in different platforms.
+Then in any new project folder, open Claude Code and run:
 
-- Typescript and tsgo: I use Typescript in all platform and will use `tsgo` where possible. It's still in preview but I find it works well so far in all my codebase.
-- Tailwind (and ShadCN) for styling: Tailwind works with web platform for web and desktop (Wails is just webview). In Expo, I use compile-time Tailwind library like [mgcrea/react-native-tailwind](https://github.com/mgcrea/react-native-tailwind)
-- Biome: faster than eslint/prettier
-- Bun for runtime, package manager, and test: Always use bun when possible. When not possible (eg. for test in react-native), use the recommended tool like jest but still wrap it nicely in package.json, eg. having `bun test:all` which run split test for bun test and jest.
-- `ky` for fetch and api wrapper: good api interface, good types
-- `type-fest`
-- `saas-maker`: error handling, route utils
+```
+/meta-starter
+```
+
+Claude reads the command, opens `~/meta-starter/AGENTS.md`, introduces itself as meta-starter, and interviews you.
+
+## Using with Codex
+
+Codex doesn't have slash commands, but you can add a shell function to your `~/.zshrc` or `~/.bashrc`:
+
+```bash
+meta-starter() {
+  codex "$(cat ~/meta-starter/AGENTS.md)"
+}
+```
+
+Then in any new project folder:
+
+```bash
+meta-starter
+```
+
+Codex receives the full AGENTS.md as its instruction and starts the interview.
+
+## Templates
+
+| Template | Platform | Framework |
+|----------|----------|-----------|
+| `web-opennext/` | Web | Next.js + OpenNext (Cloudflare) |
+| `mobile-expo/` | iOS / Android | Expo + React Native |
+| `desktop-wails/` | Desktop | Go + Wails |
+
+## Common stack
+
+These apply across all templates:
+
+- **TypeScript** + **tsgo** (`@typescript/native-preview`) for type checking
+- **Bun** for runtime, package manager, and test runner
+- **Biome** for linting and formatting (replaces eslint + prettier)
+- **Lefthook** for git hooks (replaces husky)
+- **Tailwind** + **ShadCN** for styling (web/desktop), **mgcrea/react-native-tailwind** for mobile
+- **ky** for HTTP requests
+- **@tanstack/react-query** for async data fetching and server state
+- **@legendapp/state** for global/shared state management
+- **Zod** for schema validation
+- **es-toolkit** for utility functions (replaces lodash)
+- **type-fest** for type utilities
+- **Lucide** for icons, **react-simple-icons** for brand logos
+- **motion** for animations
+
+## Optional features (decided per project)
+
+- **Supabase** — auth and database
+- **Autumn** — billing and payments
+- **Rate limiting** — for public-facing APIs
