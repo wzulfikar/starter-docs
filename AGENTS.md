@@ -82,6 +82,7 @@ The `patterns/` folder contains cross-platform patterns you should apply when se
 | `patterns/icons.md` | All platforms — lucide (default), lucide-animated, simple icons for brands |
 | `patterns/package-json-scripts.md` | All platforms — standard script names every project must have |
 | `patterns/zed.md` | All platforms — `.zed/settings.json` for biome auto-format on save |
+| `patterns/agent-tools.md` | All platforms — essential MCP tools for browser, simulator, and GitHub |
 
 ---
 
