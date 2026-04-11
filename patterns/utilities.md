@@ -164,3 +164,142 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 ```
 
 nuqs supports Next.js (App Router and Pages), React Router, and Remix. Pick the matching adapter; the `useQueryState` API is identical across all of them.
+
+## react-hook-form
+
+Manages form state, validation, and submission without controlled inputs or unnecessary re-renders. Integrates cleanly with schema validators like Zod.
+
+**Basic usage:**
+
+```tsx
+import { useForm } from "react-hook-form"
+
+export function LoginForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<{ email: string; password: string }>()
+
+  const onSubmit = async (data: { email: string; password: string }) => {
+    await signIn(data)
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register("email", { required: "Email is required" })} />
+      {errors.email && <p>{errors.email.message}</p>}
+
+      <input type="password" {...register("password", { required: "Password is required" })} />
+      {errors.password && <p>{errors.password.message}</p>}
+
+      <button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? "Signing in…" : "Sign in"}
+      </button>
+    </form>
+  )
+}
+```
+
+`register` wires the input to the form without making it a controlled component. Validation runs on submit by default; errors are available immediately after.
+
+**Schema validation with Zod:**
+
+Pair `react-hook-form` with `@hookform/resolvers` to validate against a Zod schema instead of writing per-field rules:
+
+```tsx
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+
+const schema = z.object({
+  email: z.string().email("Invalid email"),
+  password: z.string().min(8, "At least 8 characters"),
+})
+
+type FormValues = z.infer<typeof schema>
+
+export function LoginForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({ resolver: zodResolver(schema) })
+
+  const onSubmit = async (data: FormValues) => {
+    await signIn(data)
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register("email")} />
+      {errors.email && <p>{errors.email.message}</p>}
+
+      <input type="password" {...register("password")} />
+      {errors.password && <p>{errors.password.message}</p>}
+
+      <button type="submit" disabled={isSubmitting}>Sign in</button>
+    </form>
+  )
+}
+```
+
+The schema is the single source of truth for both TypeScript types and runtime validation.
+
+**Default values and resetting:**
+
+```ts
+const { reset } = useForm<FormValues>({
+  resolver: zodResolver(schema),
+  defaultValues: { email: "", password: "" },
+})
+
+// Reset to initial defaults after a successful submit
+const onSubmit = async (data: FormValues) => {
+  await submit(data)
+  reset()
+}
+
+// Or reset to specific values (e.g. when editing an existing record)
+reset({ email: user.email, password: "" })
+```
+
+**Watching field values:**
+
+```ts
+const { watch } = useForm<FormValues>()
+
+const email = watch("email")          // re-renders on every change to "email"
+const all = watch()                   // re-renders on any change
+```
+
+Use `watch` sparingly — it triggers re-renders. For derived state that doesn't need to drive the UI, read `getValues()` inside `handleSubmit` instead.
+
+**Controlled components with `Controller`:**
+
+Use `Controller` when the input doesn't accept a `ref` (e.g. custom UI library components):
+
+```tsx
+import { useForm, Controller } from "react-hook-form"
+import { Select } from "@/components/ui/select"
+
+const { control, handleSubmit } = useForm<{ role: string }>()
+
+<Controller
+  name="role"
+  control={control}
+  rules={{ required: "Role is required" }}
+  render={({ field }) => (
+    <Select {...field} options={["admin", "member", "viewer"]} />
+  )}
+/>
+```
+
+**Key options on `useForm`:**
+
+| Option | Default | Effect |
+|---|---|---|
+| `mode` | `"onSubmit"` | When to trigger validation: `"onChange"`, `"onBlur"`, `"onSubmit"`, `"all"` |
+| `reValidateMode` | `"onChange"` | When to re-validate after a first error is shown |
+| `defaultValues` | `{}` | Initial field values; also used as the reset target |
+| `resolver` | — | Plug in Zod, Yup, Valibot, or any other schema validator |
