@@ -87,6 +87,7 @@ The `patterns/` folder contains cross-platform patterns you should apply when se
 | `patterns/expo-rapid-iteration.md` | Mobile — internal distribution via TestFlight/Play Store + OTA updates with EAS |
 | `patterns/thin-api-wrapper-with-ky.md` | All platforms — thin ky wrapper for services without an SDK |
 | `patterns/parse-dont-validate-with-zod.md` | All platforms — parse at layer boundaries with Zod, trust data downstream |
+| `patterns/react-query-cache.md` | Web / Mobile — show cached data instantly, load indicator on first fetch only, clear on logout |
 
 ---
 
