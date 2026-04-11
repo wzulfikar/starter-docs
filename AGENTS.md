@@ -72,6 +72,16 @@ For each feature the developer says they **don't need**, remove the related file
 
 ---
 
+## Reusable patterns
+
+The `patterns/` folder contains cross-platform patterns you should apply when setting up a new project. Check it for anything relevant to the project being set up.
+
+| Pattern | Applies to |
+|---------|------------|
+| `patterns/lefthook-for-automated-maintenance.md` | All platforms — biome on staged files pre-commit, tsgo pre-push |
+
+---
+
 ## Invariants (always apply, no exceptions)
 
 - **bun** — package manager and runtime (never npm or pnpm)
