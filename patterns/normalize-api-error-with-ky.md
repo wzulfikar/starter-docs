@@ -4,7 +4,7 @@ When calling external APIs, errors need to be normalized into consistent types s
 
 ## Normalizing HTTP errors at the instance level
 
-Use the `beforeError` hook on the ky instance to convert `HTTPError` into your own `APINetworkError`. Every request on the instance gets this automatically — no wrapper, no per-call try/catch.
+Use the `beforeError` hook on the ky instance to convert `HTTPError` into your own `APINetworkError`. Every request on the instance gets this automatically: no wrapper, no per-call try/catch.
 
 ```ts
 // src/lib/api.ts
@@ -32,7 +32,7 @@ export const api = ky.create({
 })
 ```
 
-`error.data` is already parsed by ky — no need to call `error.response.json()`.
+`error.data` is already parsed by ky, so no need to call `error.response.json()`.
 
 ## Schema validation with ky's built-in support
 
@@ -52,7 +52,7 @@ const RepoSchema = z.object({
 
 export async function getRepo(owner: string, name: string) {
   return api.get(`repos/${owner}/${name}`).json(RepoSchema)
-  // return type: z.infer<typeof RepoSchema> — derived from schema, not asserted
+  // return type: z.infer<typeof RepoSchema>, derived from schema, not asserted
 }
 ```
 
@@ -64,17 +64,17 @@ Every error that can occur when calling an external API falls into one of three 
 
 | Error | Class | Cause | User sees | Dev action |
 |---|---|---|---|---|
-| `APINetworkError` | `HTTPError` + `TypeError` | HTTP layer — 4xx, 5xx, timeout, DNS failure | Actionable message (401 → "log in", 429 → "slow down") | Usually none, it's expected |
-| `APIBusinessError` | Custom | API logic — quota exceeded, already exists, invalid input | Specific message from the API | Usually none, handle in UI |
-| `APIResultError` | `SchemaValidationError` | Response shape changed unexpectedly | "Something went wrong" | Fix immediately — API drifted |
+| `APINetworkError` | `HTTPError` + `TypeError` | HTTP layer: 4xx, 5xx, timeout, DNS failure | Actionable message (401 → "log in", 429 → "slow down") | Usually none, it's expected |
+| `APIBusinessError` | Custom | API logic: quota exceeded, already exists, invalid input | Specific message from the API | Usually none, handle in UI |
+| `APIResultError` | `SchemaValidationError` | Response shape changed unexpectedly | "Something went wrong" | Fix immediately, API drifted |
 
-**`APINetworkError`** — the transport layer failed or the server rejected the request. The user may have caused it (wrong credentials, rate limited) or it's transient (timeout, server down). Either way it's expected and recoverable.
+**`APINetworkError`**: the transport layer failed or the server rejected the request. The user may have caused it (wrong credentials, rate limited) or it's transient (timeout, server down). Either way it's expected and recoverable.
 
-**`APIBusinessError`** — the request succeeded at the HTTP level but the API returned a documented error: quota exceeded, resource already exists, validation failed. The API contract defines these explicitly. The user can act on them.
+**`APIBusinessError`**: the request succeeded at the HTTP level but the API returned a documented error; quota exceeded, resource already exists, validation failed. The API contract defines these explicitly. The user can act on them.
 
-**`APIResultError`** — the request succeeded and the API returned 2xx, but the response shape doesn't match the schema. This is never expected. The API changed without notice, or the schema is wrong. The user can't act on it — you need to fix the code. Report it to the error tracker immediately.
+**`APIResultError`**: the request succeeded and the API returned 2xx, but the response shape doesn't match the schema. This is never expected. The API changed without notice, or the schema is wrong. The user can't act on it; you need to fix the code and report it to the error tracker immediately.
 
-Note: `APINetworkError` has two sub-flavours with slightly different behaviour in ky — HTTP errors (4xx/5xx, caught by `beforeError`) and true network errors (timeout, DNS, connection refused, thrown as `TypeError` and not caught by `beforeError`). Both mean "transport layer failed" and are usually handled the same way, but timeout vs 401 may need different user messages.
+Note: `APINetworkError` has two sub-flavours with slightly different behaviour in ky. HTTP errors (4xx/5xx) are caught by `beforeError`, while true network errors (timeout, DNS, connection refused) are thrown as `TypeError` and bypass `beforeError`. Both mean the transport layer failed and are usually handled the same way, but timeout vs 401 may need different user messages.
 
 ## Handling business errors
 
@@ -108,7 +108,7 @@ Callers get clean typed data. `APIBusinessError` surfaces in the global handler 
 
 ## Wiring to the global error handler
 
-All three error types converge in the global error handler. `SchemaValidationError` (ky's own class for shape mismatches) is the only place where a ky class surfaces — everything else is your own:
+All three error types converge in the global error handler. `SchemaValidationError` (ky's own class for shape mismatches) is the only place where a ky class surfaces; everything else is your own:
 
 ```ts
 // src/lib/on-error.ts
@@ -140,7 +140,7 @@ export function onError(err: unknown) {
 }
 ```
 
-`SchemaValidationError` intentionally does not extend `KyError` — ky itself draws the boundary between HTTP concerns and data concerns. It bypasses the `beforeError` hook because it is thrown after the response is received and parsed, during schema validation. There is no ky hook that intercepts it. The global handler is the only place it needs to be caught.
+`SchemaValidationError` intentionally does not extend `KyError`. ky itself draws the boundary between HTTP concerns and data concerns. It bypasses the `beforeError` hook because it is thrown after the response is received and parsed, during schema validation. The global handler is the only place it needs to be caught.
 
 ## File structure
 
@@ -148,7 +148,7 @@ export function onError(err: unknown) {
 src/
   lib/
     api.ts        # ky instance with beforeError hook, APINetworkError + APIBusinessError classes
-    on-error.ts   # global error handler — APINetworkError, APIBusinessError, SchemaValidationError
+    on-error.ts   # global error handler: APINetworkError, APIBusinessError, SchemaValidationError
     github.ts     # uses api instance, .json(Schema) for typed + validated responses
     resend.ts     # same pattern
 ```
