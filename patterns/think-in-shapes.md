@@ -83,4 +83,4 @@ if (error instanceof AppError) {
 
 Inside these boundaries, functions are plain TypeScript with no error ceremony or unwrapping noise. The shape contract is enforced at the edges so the inside stays clean.
 
-See [natural-vs-purism.md](/patterns/natural-vs-purism) for why this setup over alternatives like Effect.ts.
+See [natural-vs-purism.md](./natural-vs-purism.md) for why this setup over alternatives like Effect.ts.
