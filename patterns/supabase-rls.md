@@ -14,20 +14,20 @@ One policy per operation, one verb in the name. The pipe shows the alternatives 
 -- profiles table with a user_id column
 create policy "Allow select for own records"
   on profiles for select
-  using (auth.uid() = user_id);
+  using ((select auth.uid()) = user_id);
 
 create policy "Allow insert for own records"
   on profiles for insert
-  with check (auth.uid() = user_id);
+  with check ((select auth.uid()) = user_id);
 
 create policy "Allow update for own records"
   on profiles for update
-  using (auth.uid() = user_id)
-  with check (auth.uid() = user_id);
+  using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);
 
 create policy "Allow delete for own records"
   on profiles for delete
-  using (auth.uid() = user_id);
+  using ((select auth.uid()) = user_id);
 ```
 
 ## Why this format
@@ -43,10 +43,14 @@ The convention assumes a `user_id uuid` column referencing `auth.users(id)`. If 
 ```sql
 create policy "Allow select for own records"
   on posts for select
-  using (auth.uid() = owner_id);
+  using ((select auth.uid()) = owner_id);
 ```
 
 The name stays stable; the implementation detail is in the body.
+
+## Why `(select auth.uid())` and not `auth.uid()`
+
+Wrapping the call in a subquery forces Postgres to evaluate it once per statement and cache the result. Without it, `auth.uid()` is called once per row, which adds up on large tables. This is a standard Supabase recommendation for any policy that calls a function with stable output.
 
 ## `using` vs `with check`
 
