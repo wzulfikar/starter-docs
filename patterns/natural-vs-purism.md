@@ -12,7 +12,7 @@ So why does meta-starter not use them?
 
 ## The problem with purism
 
-Principled libraries optimize for correctness and completeness. The tradeoff is that they require you to adopt a mental model — and *stay inside it*. Effect.ts has its own primitives: pipe, gen, fiber, layer. tRPC requires a router structure and a per-framework client adapter. neverthrow wraps everything and removes the option to throw at all.
+Principled libraries optimize for correctness and completeness. The tradeoff is that they require you to adopt a mental model and *stay inside it*. Effect.ts has its own primitives: pipe, gen, fiber, layer. tRPC requires a router structure and a per-framework client adapter. neverthrow wraps everything and removes the option to throw at all.
 
 These models pay off when you're in the codebase daily. They become friction when you return after a month and spend the first session re-learning library conventions instead of solving the actual problem.
 
@@ -24,10 +24,10 @@ Natural means the abstraction matches how you already think, not how a library w
 
 In meta-starter this looks like:
 
-- `Result<T, E>` — just `{ data, error }`. No new primitives to learn
-- `tryCatch` / `throwOnError` from saas-maker — one line each, obvious intent
-- `AppError` — plain class extension, typed metadata, no runtime magic
-- Route helpers instead of tRPC — just functions with typed input/output
+- `Result<T, E>`: just `{ data, error }`. No new primitives to learn
+- `tryCatch` / `throwOnError` from saas-maker: one line each, obvious intent
+- `AppError`: plain class extension, typed metadata, no runtime magic
+- Route helpers instead of tRPC: just functions with typed input/output
 
 None of this is novel. It is deliberately boring.
 
@@ -35,10 +35,10 @@ None of this is novel. It is deliberately boring.
 
 | Library | Actual cost |
 |---------|-------------|
-| Effect.ts | Full mental model adoption. Pipe, gen, fiber, layer are new primitives — not just new syntax |
+| Effect.ts | Full mental model adoption. Pipe, gen, fiber, layer are new primitives, not just new syntax |
 | neverthrow | One-way door. Wraps everything; you lose the ability to throw at all |
 | tRPC | Client-server coupling; specific adapter per frontend; re-learn on each return |
-| ts-rest | Contract-first — right for public APIs, overhead for internal product code |
+| ts-rest | Contract-first: right for public APIs, overhead for internal product code |
 
 The cost is never the library itself. It is the context switch every time you re-enter.
 
