@@ -11,7 +11,7 @@ This is a **subtractive** approach to project setup: everything you've ever used
 Clone to a fixed location on your machine:
 
 ```bash
-git clone https://github.com/wzulfikar/starter-docs ~/meta-starter
+git clone https://github.com/wzulfikar/meta-starter ~/meta-starter
 ```
 
 ## Using with Claude Code
@@ -50,11 +50,11 @@ Codex receives the full AGENTS.md as its instruction and starts the interview.
 
 ## Templates
 
-| Template | Platform | Framework |
-|----------|----------|-----------|
-| `web-opennext/` | Web | Next.js + OpenNext (Cloudflare) |
-| `mobile-expo/` | iOS / Android | Expo + React Native |
-| `desktop-wails/` | Desktop | Go + Wails |
+| Template         | Platform      | Framework                       |
+| ---------------- | ------------- | ------------------------------- |
+| `web-opennext/`  | Web           | Next.js + OpenNext (Cloudflare) |
+| `mobile-expo/`   | iOS / Android | Expo + React Native             |
+| `desktop-wails/` | Desktop       | Go + Wails                      |
 
 ## Common stack
 
