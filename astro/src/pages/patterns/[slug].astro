@@ -1,0 +1,38 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const patterns = await getCollection('patterns');
+  return patterns.map((pattern) => ({
+    params: { slug: pattern.id },
+    props: { pattern },
+  }));
+}
+
+const { pattern } = Astro.props;
+const { Content } = await render(pattern);
+
+function formatName(id: string): string {
+  return id
+    .replace(/^\d+[-_]/, '')
+    .replace(/[-_]/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+---
+
+<Layout title={`${formatName(pattern.id)} — meta-starter`}>
+  <div class="max-w-2xl mx-auto px-6 py-16">
+    <nav class="mb-10">
+      <a
+        href="/"
+        class="text-sm text-gray-400 hover:text-gray-600 transition-colors"
+      >
+        ← meta-starter
+      </a>
+    </nav>
+    <article class="prose prose-gray max-w-none">
+      <Content />
+    </article>
+  </div>
+</Layout>
