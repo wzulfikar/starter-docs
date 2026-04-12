@@ -17,7 +17,7 @@ A process that takes a clear shape and produces a clear shape is easy to reason 
 
 - If I give this, I get that
 
-Which conversely mean:
+Which conversely means:
 
 - If I want that, I give this
 
@@ -33,7 +33,7 @@ Being explicit about variations upfront means:
 - Each process only handles what it actually needs to handle
 - The code reads like the domain, not like defensive logic guarding against things that should not happen
 
-> Engineers call this "type-driven design." We call it here "think in shapes", because the idea is intuitive and does not require a technical background to apply.
+> Engineers call this "type-driven design." Here, we call it "think in shapes" because the idea is intuitive and does not require a technical background to apply.
 
 ## In practice
 
