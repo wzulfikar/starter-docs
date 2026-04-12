@@ -45,3 +45,42 @@ When you sit down with a problem, resist the urge to think about the steps first
 - What does that process return?
 
 Get those four answers on paper before writing anything. The implementation will follow.
+
+## Applied to errors: normalize at boundaries
+
+Error handling is a direct application of this principle. Code outside your control—databases, external APIs, third-party libraries—throws errors in unpredictable shapes. Inside your code, you want one shape.
+
+The pattern: **normalize at boundaries, plain types inside.**
+
+```
+External world (throws, unknown shapes)
+    ↓  tryCatch / Zod parse          ← incoming boundary
+Internal code (Result<T, E> or typed throw)
+    ↓  AppError                      ← outgoing boundary
+HTTP response ({ error: { code, message } })
+```
+
+Three boundaries in practice:
+
+**1. Route handler** — validate the incoming shape before it enters:
+```ts
+const body = throwOnError(() => schema.parse(req.body), "Invalid input")
+```
+
+**2. Service / I/O call** — wrap external calls that may throw:
+```ts
+const result = await tryCatch(db.user.findUnique({ where: { id } }))
+if (result.error) throw new AppError("User not found", { httpStatus: 404 })
+```
+
+**3. Response** — map any error to a consistent outgoing shape:
+```ts
+// onError.ts
+if (error instanceof AppError) {
+  return { error: { code: error.errorCode, message: error.message } }
+}
+```
+
+Inside these boundaries, functions are plain TypeScript — no error ceremony, no unwrapping noise. The shape contract is enforced at the edges so the inside stays clean.
+
+See [natural-vs-purism.md](./natural-vs-purism.md) for why this setup over alternatives like Effect.ts.
