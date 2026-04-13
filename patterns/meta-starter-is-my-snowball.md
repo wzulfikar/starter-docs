@@ -13,9 +13,9 @@ The result is a collection of patterns that are low-maintenance (update when I n
 ## The snowball
 
 ```
-more projects ←──────────────────────────┐
+more projects ◄──────────────────────────┐
   → more experience                      │
-    → more things to add to meta-starter │
+    → more things to add to meta starter │
       → implement tasks faster ──────────┘
 ```
 
@@ -23,7 +23,7 @@ Each project feeds the next. The patterns compound.
 
 ## Why it works
 
-- **No organization overhead**: AI navigates the patterns, not me. Rough notes are fine. It's all just markdown files!
+- **No organization overhead**: AI navigates the patterns, not me. Rough notes are fine, and it's all just markdown files!
 - **Zero-friction reuse**: describe what I want, reference the pattern, agent does the rest.
 - **Self-updating**: I add to it when I encounter something worth keeping, not on a schedule.
 - **Cross-project**: one pattern repo serves every project I work on.
