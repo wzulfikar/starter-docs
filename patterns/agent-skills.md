@@ -1,6 +1,6 @@
 # Agent Skills
 
-Skills extend your agent's behavior beyond what it does by default. Unlike MCP tools, which add new capabilities (browser control, GitHub access, device automation), skills shape _how_ the agent thinks, communicates, and approaches work. Same model, same tools — different instruction set.
+Skills extend your agent's behavior beyond what it does by default. Unlike MCP tools, which add new capabilities (browser control, GitHub access, device automation), skills shape _how_ the agent thinks, communicates, and approaches work. Same model, same tools: different instruction set.
 
 ## Two kinds of skills
 
@@ -20,7 +20,7 @@ Then layer in behavioral skills. The one worth trying immediately is `caveman`.
 
 ## Caveman
 
-It sounds ridiculous. Try it anyway.
+It sounds ridiculous, but try it:
 
 ```
 /caveman
@@ -36,7 +36,7 @@ Caveman has intensity levels if you want to dial it up or down (`/caveman lite`,
 
 ## Where to find skills
 
-Some places to browse and install skills are [skillsllm.com](https://skillsllm.com) and [skills.sh](https://skills.sh). Both are community-driven directories where people publish skills for common workflows, and either one is a reasonable starting point when you're looking for something specific — a skill for a framework you use, a code review style you prefer, or a communication mode that fits how you work.
+Some places to browse and install skills are [skillsllm.com](https://skillsllm.com) and [skills.sh](https://skills.sh). Both are community-driven directories where people publish skills for common workflows, and either one is a reasonable starting point when you're looking for something specific: a skill for a framework you use, a code review style you prefer, or a communication mode that fits how you work.
 
 If you can't find what you need, you can write your own. A skill is just a markdown file with a prompt, so the barrier is low once you have a clear idea of the behavior you want.
 
@@ -51,7 +51,7 @@ Over time you end up with a small inventory: one or two behavioral skills that y
 Skills are prompt-level changes and are only active for the current session. They are not the right place for things that should always apply:
 
 - **Project conventions** belong in `CLAUDE.md` at the repo root, where the agent reads them automatically without you having to remember to invoke anything
-- **Capabilities** (calling APIs, controlling a browser, interacting with GitHub) require MCP tools, not skills — see [agent-tools.md](./agent-tools.md)
+- **Capabilities** (calling APIs, controlling a browser, interacting with GitHub) require MCP tools, not skills; see [agent-tools.md](./agent-tools.md)
 - **Language-level patterns** belong in the codebase itself and in documentation the agent can read, not in a skill you have to re-load each session
 
 The cleaner mental model: skills shape behavior per-session, `CLAUDE.md` shapes behavior per-project, and MCP tools add new capabilities altogether.
