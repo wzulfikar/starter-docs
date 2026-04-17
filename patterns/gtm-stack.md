@@ -1,6 +1,6 @@
 # GTM Stack
 
-GTM (Go-to Market) in short: The plan for how to get your product to the people who need it, at the moment they are ready to pay, through a channel you can use repeatedly. It's not the launch day, but the system before launch day that makes launch day matter.
+GTM (Go-to-market) in short: The plan for how to get your product to the people who need it, at the moment they are ready to pay, through a channel you can use repeatedly. It's not the launch day, but the system before launch day that makes launch day matter.
 
 ## The five components
 
