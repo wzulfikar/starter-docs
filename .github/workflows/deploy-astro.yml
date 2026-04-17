@@ -4,8 +4,9 @@ on:
   push:
     branches: [main]
     paths:
-      - 'astro/**'
-      - '.github/workflows/deploy-astro.yml'
+      - "astro/**"
+      - "patterns/**"
+      - ".github/workflows/deploy-astro.yml"
   workflow_dispatch:
 
 permissions:
