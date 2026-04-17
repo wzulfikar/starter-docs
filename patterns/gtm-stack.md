@@ -20,15 +20,15 @@ Example of motion: awareness -> interest -> trial -> conversion.
 
 This is the tool stack for filling those GTM needs.
 
-| Need                | Tool                                                                                                   |
-| ------------------- | ------------------------------------------------------------------------------------------------------ |
-| Market research     | Claude or ChatGPT with a product thesis template                                                       |
-| Forms / surveys     | [Tally](https://tally.so), [Google Forms](https://forms.google.com)                                    |
-| Product analytics   | [Mixpanel](https://mixpanel.com), [Metabase](https://www.metabase.com), [PostHog](https://posthog.com) |
-| Marketing           | [Typefully](https://typefully.com)                                                                     |
-| Reddit distribution | [Redreach.ai](https://redreach.ai)                                                                     |
-| Web onboarding      | [Flows](https://flows.sh)                                                                              |
-| Expo onboarding     | [react-native-onboarding](https://github.com/software-mansion-labs/react-native-onboarding)            |
+| Need                | Tool                                                                                                                                                                                     |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Market research     | Claude or ChatGPT with a product thesis template                                                                                                                                         |
+| Forms / surveys     | [Tally](https://tally.so), [Google Forms](https://forms.google.com)                                                                                                                      |
+| Product analytics   | [Mixpanel](https://mixpanel.com), [Metabase](https://www.metabase.com), [PostHog](https://posthog.com)                                                                                   |
+| Marketing           | [Typefully](https://typefully.com)                                                                                                                                                       |
+| Reddit distribution | [Redreach.ai](https://redreach.ai)                                                                                                                                                       |
+| Web onboarding      | [Flows](https://flows.sh)                                                                                                                                                                |
+| Expo onboarding     | [react-native-onboarding](https://github.com/software-mansion-labs/react-native-onboarding), [react-native-spotlight-tour](https://github.com/stackbuilders/react-native-spotlight-tour) |
 
 ## Market research
 
